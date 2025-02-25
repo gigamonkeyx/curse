@@ -1,0 +1,190 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#game-canvas {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+}
+
+#status-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 32px;
+    background: rgb(42, 42, 42);
+    color: #fff;
+    text-align: center;
+    line-height: 32px;
+    font-size: 12px;
+}
+
+#gear-window {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    width: 256px;
+    height: 320px;
+    background: rgb(42, 42, 42);
+    color: #fff;
+    border: 2px solid #000;
+    padding: 8px;
+    font-size: 12px;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.gear-header {
+    text-align: center;
+    margin: 8px 0;
+    color: #00FF00;
+}
+
+.gear-slots, .gear-inventory {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.gear-stats {
+    margin: 8px 0;
+}
+
+.gear-button {
+    width: 100%;
+    margin-top: 8px;
+    background: #00FF00;
+    color: #000;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.gear-button:hover {
+    background: #00CC00;
+}
+
+#config-page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 256px;
+    max-height: 480px;
+    background: rgb(42, 42, 42);
+    color: #fff;
+    border: 2px solid #000;
+    padding: 16px;
+    font-size: 12px;
+    z-index: 20;
+    overflow-y: auto;
+}
+
+.config-header {
+    font-size: 16px;
+    color: #0000FF;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.config-tabs {
+    margin-bottom: 16px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 4px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    color: #00FF00;
+    border-bottom: 2px solid #00FF00;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.config-option {
+    margin: 8px 0;
+}
+
+.config-option label {
+    display: block;
+}
+
+.instruction {
+    font-size: 10px;
+    color: #A0A0A0;
+    margin-top: 4px;
+}
+
+.config-button {
+    width: 100%;
+    margin-top: 8px;
+    background: #00FF00;
+    color: #000;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.config-button:hover {
+    background: #00CC00;
+}
+
+#start-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 256px;
+    background: rgb(42, 42, 42);
+    color: #fff;
+    border: 2px solid #000;
+    padding: 16px;
+    font-size: 12px;
+    z-index: 20;
+    text-align: center;
+}
+
+.menu-header {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: #00FF00;
+}
+
+.menu-option {
+    margin: 8px 0;
+}
+
+.menu-button {
+    width: 100%;
+    margin-top: 8px;
+    background: #00FF00;
+    color: #000;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    background: #00CC00;
+}
+
+.hidden {
+    display: none;
+}

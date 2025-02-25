@@ -1,0 +1,16 @@
+1 Combat helmet  https://en.wikipedia.org/wiki/Combat_helmet
+2 Cuirass https://en.wikipedia.org/wiki/Cuirass
+3 Plate gloves  
+4 Sabaton https://en.wikipedia.org/wiki/Sabaton
+5 Leather helmet
+6 Leather breastplate
+7 Leather gloves
+8 Leather boots
+9 Chain Helmet
+10 Chainmail chestpiece
+
+
+Plate armour  https://en.wikipedia.org/wiki/Plate_armour
+Boiled leather  https://en.wikipedia.org/wiki/Boiled_leather
+Chain mail  https://en.wikipedia.org/wiki/Chain_mail
+Body armor  https://en.wikipedia.org/wiki/Body_armor

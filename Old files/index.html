@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Time Rogue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="game-canvas" width="2560" height="800"></canvas>
+    <div id="status-bar"></div>
+    <div id="gear-window" class="hidden">
+        <div class="gear-header">Equipped Gear & Bag</div>
+        <div id="equipped-slots" class="gear-slots"></div>
+        <div id="player-stats" class="gear-stats">
+            HP: <span id="gear-hp">20/20</span> | Str: <span id="gear-str">2</span> | 
+            Def: <span id="gear-def">0</span> | Spd: <span id="gear-spd">1</span> | 
+            Level: <span id="gear-level">1</span>
+        </div>
+        <div class="gear-header">Bag (Unequipped Items)</div>
+        <div id="bag-list" class="gear-inventory"></div>
+        <button id="close-gear" class="gear-button">Close (Esc)</button>
+    </div>
+    <div id="config-page" class="menu hidden">
+        <div class="config-header">Game Configuration</div>
+        <div class="config-tabs">
+            <button class="tab-button active" data-tab="game">Game Settings</button>
+            <button class="tab-button" data-tab="monsters">Monsters</button>
+            <button class="tab-button" data-tab="loot-pool">Loot Pool</button>
+            <button class="tab-button" data-tab="spells">Spells</button>
+            <button class="tab-button" data-tab="import-export">Import/Export</button>
+        </div>
+        <div class="config-content">
+            <div id="game-tab" class="tab-content active">
+                <div class="config-option">
+                    <label>Floors: <input type="number" id="config-floors" value="10" min="1" max="20"></label>
+                    <p class="instruction">Set the number of floors (1-20). Default is 10.</p>
+                </div>
+                <div class="config-option">
+                    <label>Difficulty/Loot: <input type="range" id="config-difficulty-loot" min="0" max="100" value="50"></label>
+                    <span id="config-difficulty-loot-value">Normal/Balanced</span>
+                    <p class="instruction">Slide to adjust difficulty and loot (0=Easy/Scarce, 50=Normal/Balanced, 100=Hard/Abundant).</p>
+                </div>
+                <div class="config-option">
+                    <label>Vision Radius: <input type="number" id="config-vision-radius" value="2" min="1" max="5"></label>
+                    <p class="instruction">Set vision radius (1-5 tiles). Default is 2.</p>
+                </div>
+                <div class="config-option">
+                    <label><input type="checkbox" id="config-debug"> Enable Debug Mode</label>
+                    <p class="instruction">Toggle debug logs in the console and on-screen.</p>
+                </div>
+                <div class="config-option">
+                    <label><input type="checkbox" id="config-save-default"> Save as Default</label>
+                    <p class="instruction">Save these settings as default for future sessions.</p>
+                </div>
+                <button id="config-save-game" class="config-button">Save Settings</button>
+            </div>
+            <div id="monsters-tab" class="tab-content">
+                <div id="monster-list"></div>
+                <button id="add-monster" class="config-button">Add New Monster</button>
+                <p class="instruction">Customize monster stats and affixes.</p>
+            </div>
+            <div id="loot-pool-tab" class="tab-content">
+                <div id="loot-pool-list"></div>
+                <button id="export-loot-pool" class="config-button">Export Loot Pool</button>
+                <p class="instruction">View, edit, or export the persistent loot pool.</p>
+            </div>
+            <div id="spells-tab" class="tab-content">
+                <div id="spell-list"></div>
+                <button id="add-spell" class="config-button">Add New Spell</button>
+                <p class="instruction">Create or modify spells.</p>
+            </div>
+            <div id="import-export-tab" class="tab-content">
+                <input type="file" id="config-import" accept=".json">
+                <button id="config-export" class="config-button">Export Data</button>
+                <p class="instruction">Import/export game data (monsters, loot, spells).</p>
+            </div>
+        </div>
+        <button id="close-config" class="config-button">Close (Esc)</button>
+    </div>
+    <div id="start-menu" class="menu">
+        <div class="menu-header">Adventure Time Rogue!</div>
+        <div class="menu-option">
+            Floors: <input type="number" id="floor-count" value="10" min="1" max="20">
+        </div>
+        <div class="menu-option">
+            Difficulty/Loot: <input type="range" id="difficulty-loot" min="0" max="100" value="50">
+            <span id="difficulty-loot-value">Normal/Balanced</span>
+        </div>
+        <div class="menu-option">
+            Random Seed: <input type="text" id="seed" placeholder="Random">
+        </div>
+        <div class="menu-option">
+            <button id="config-button" class="menu-button">Config</button>
+        </div>
+        <button id="start-game" class="menu-button">Start Game</button>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
