@@ -9,6 +9,9 @@ import InputHandler from './InputHandler.js';
 import FOV from '../map/FOV.js';
 import { MAP, GAME_STATES } from '../utils/Constants.js';
 import EventBus from '../utils/EventBus.js';
+import Config from './Config.js';
+import SaveSystem from '../engine/SaveSystem.js';
+import LevelManager from '../engine/LevelManager.js';
 
 class Game {
     /**
@@ -59,6 +62,10 @@ class Game {
         
         // Bind methods to instance
         this.gameLoop = this.gameLoop.bind(this);
+
+        // Save system
+        this.saveSystem = new SaveSystem('curse-game-save');
+        this.assets = {};
     }
     
     /**
@@ -190,6 +197,15 @@ class Game {
             this.player.y, 
             this.config.visibilityRadius
         );
+        
+        // Update visibility in mapLayout based on FOV calculation
+        visibleTiles.forEach(tile => {
+            const { x, y } = tile;
+            if (x >= 0 && y >= 0 && x < MAP.WIDTH && y < MAP.HEIGHT) {
+                this.mapLayout[y][x].visible = true;
+                this.mapLayout[y][x].discovered = true;
+            }
+        });
         
         // Draw map tiles
         for (let y = 0; y < MAP.HEIGHT; y++) {
@@ -635,16 +651,82 @@ class Game {
         
         const item = this.entityManager.getItemAt(this.player.x, this.player.y);
         
-        if (item && item.type !== 'gold') {
-            const removed = this.entityManager.removeItemAt(this.player.x, this.player.y);
-            
-            if (removed) {
+        if (!item) {
+            this.ui.logMessage('There is nothing here to pick up.', 'info');
+            return;
+        }
+        
+        // Handle inventory capacity
+        if (item.type !== 'gold' && this.player.inventory.length >= this.player.inventoryCapacity) {
+            this.ui.logMessage('Your inventory is full.', 'warning');
+            return;
+        }
+        
+        const removed = this.entityManager.removeItemAt(this.player.x, this.player.y);
+        
+        if (removed) {
+            if (item.type === 'gold') {
+                this.player.gold += item.value;
+                this.ui.logMessage(`You picked up ${item.value} gold.`, 'info');
+            } else {
                 this.player.inventory.push(removed);
                 this.ui.logMessage(`You picked up ${removed.name}.`, 'info');
-                this.completeTurn();
             }
-        } else {
-            this.ui.logMessage('There is nothing here to pick up.', 'info');
+            this.completeTurn();
+        }
+    }
+    
+    /**
+     * Save current game state
+     */
+    saveGame() {
+        if (this.state.current !== GAME_STATES.PLAYING) return false;
+        
+        const saveData = {
+            player: this.player.serialize(),
+            level: this.player.currentFloor,
+            state: this.state,
+            levels: this.levels.map(level => level ? level.serialize() : null)
+        };
+        
+        this.saveSystem.saveGame(saveData);
+        this.ui.logMessage('Game saved successfully.', 'success');
+        return true;
+    }
+    
+    /**
+     * Load a saved game
+     */
+    loadGame() {
+        const saveData = this.saveSystem.loadGame();
+        
+        if (!saveData) {
+            this.ui.logMessage('No saved game found.', 'info');
+            return false;
+        }
+        
+        try {
+            // Restore game state
+            this.state = saveData.state;
+            this.state.current = GAME_STATES.PLAYING;
+            
+            // Restore levels
+            this.levels = saveData.levels.map(levelData => 
+                levelData ? this.mapGenerator.deserializeLevel(levelData) : null
+            );
+            
+            // Go to current level
+            this.goToFloor(saveData.level);
+            
+            // Restore player
+            this.entityManager.restorePlayer(saveData.player);
+            
+            this.ui.logMessage('Game loaded successfully.', 'success');
+            return true;
+        } catch (error) {
+            console.error('Error loading saved game:', error);
+            this.ui.logMessage('Error loading saved game.', 'danger');
+            return false;
         }
     }
     
@@ -665,6 +747,7 @@ class Game {
             return true;
         } catch (error) {
             console.error('Error loading assets:', error);
+            this.ui.logMessage('Failed to load game assets.', 'danger');
             return false;
         }
     }

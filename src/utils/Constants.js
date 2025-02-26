@@ -73,14 +73,51 @@ export const FLOOR_TYPES = {
 
 // Keyboard controls
 export const KEYS = {
-    UP: ['ArrowUp', 'w', 'k'],
-    DOWN: ['ArrowDown', 's', 'j'],
-    LEFT: ['ArrowLeft', 'a', 'h'],
-    RIGHT: ['ArrowRight', 'd', 'l'],
-    INVENTORY: ['i'],
-    CONFIG: ['c'],
-    INTERACT: [' ', 'Enter'],
+    UP: ['ArrowUp', 'w', 'W'],
+    DOWN: ['ArrowDown', 's', 'S'],
+    LEFT: ['ArrowLeft', 'a', 'A'],
+    RIGHT: ['ArrowRight', 'd', 'D'],
+    WAIT: [' ', '.'],
+    INVENTORY: ['e', 'E', 'i', 'I'],
+    EXAMINE: ['x'],
+    USE: ['e'],
+    PICKUP: ['g', ','],
+    DROP: ['q'],
     ESCAPE: ['Escape']
+};
+
+// Direction vectors for movement
+export const DIRECTIONS = {
+    UP: 'up',
+    DOWN: 'down',
+    LEFT: 'left',
+    RIGHT: 'right',
+    UP_LEFT: { x: -1, y: -1 },
+    UP_RIGHT: { x: 1, y: -1 },
+    DOWN_LEFT: { x: -1, y: 1 },
+    DOWN_RIGHT: { x: 1, y: 1 },
+};
+
+// Game states
+export const GAME_STATES = {
+    LOADING: 'loading',
+    MAIN_MENU: 'main_menu',
+    PLAYING: 'playing',
+    PAUSED: 'paused',
+    INVENTORY: 'inventory',
+    GAME_OVER: 'game_over',
+    WIN: 'win'
+};
+
+// Default game settings
+export const DEFAULT_SETTINGS = {
+    tileSize: 16,
+    viewportWidth: 15,
+    viewportHeight: 15,
+    fontSize: 16,
+    musicVolume: 0.5,
+    soundVolume: 0.7,
+    showTutorial: true
 };
 
 // Base loot types - structured definition of item categories
